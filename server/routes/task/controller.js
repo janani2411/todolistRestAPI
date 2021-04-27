@@ -2,82 +2,78 @@ const Task = require("../../models/taskSchema");
 
 // GET ALL THE Task
 const getAllTasks = async function(req, res, next)  {
-    try
-    {
-      const tasks = await Task.find().sort({from:"desc"});
-      res.send(tasks);
-    }
-    catch(err)
-    {
-      res.send(err);
-    }
+  const tasks = await Task.find().sort({from:"desc"});
+  if(tasks)
+  {
+    res.status(200).send(tasks);
+  }
+  else
+  {
+    res.status(500).send({error:"Error"});
+  } 
 };
 
 // CREATE SPECIFIC Task
 const createTask = async function(req, res, next) {
-
-    try
-    {
-    const task = await new Task({
-        taskId : req.body.taskId,
-        taskName : req.body.taskName,
-        to : req.body.to ,
-        type : req.body.type,
-        description : req.body.description
-    });
+  const task = await new Task({
+      taskId : req.body.taskId,
+      taskName : req.body.taskName,
+      to : req.body.to ,
+      type : req.body.type,
+      description : req.body.description
+  });
     
-        const savedTask = await task.save();
-        res.send(savedTask);
-    }
-    
-    catch(error)
-    {
-        res.send(error);
-    }
+  const savedTask = await task.save();
+  if(savedTask)
+  {
+    res.status(200).send(savedTask);
+  }
+  else
+  {
+    res.status(500).send({error : "Found error"});
+  }
+  
 };
 
   
 // // GET SPECIFIC Task
 const getTask  = async function (req, res, next){
-    try
+    const task = await Task.findOne({taskId : req.params.taskId})
+    if(task)
     {
-      const task = await Task.findOne({taskId : req.params.taskId})
-      res.send(task);
-    }
-    catch(err)
+      res.status(200).send(task);
+    }  
+    else
     {
-      res.send(err);
+      res.status(500).send({error : "Error"});
     }
 };
  
 // UPDATE SPECIFIC Task
 const updateTask  = async function(req, res, next) {
-    try
-    {
-      const updateTask = await Task.findOneAndUpdate({taskId:req.params.taskId} , {$set : {taskName : req.body.taskName , type : req.body.type , description : req.body.description}});
-      res.send(updateTask);
-    }catch(err)
-    {
-      res.send(err);
-    }
+  const updateTask = await Task.findOneAndUpdate({taskId:req.params.taskId} , {$set : {taskName : req.body.taskName , type : req.body.type , description : req.body.description}});
+  if(updateTask)
+  {
+    res.status(200).send("Task update successfully");
+  }
+  else
+  {
+    res.status(500).send({error : "Error found"});
+  }
 };
 
 // DELETE SPECIFIC Task
 const deleteTask = async function(req, res, next) {
-    try
-    {
-        const deleteTask = await Task.findOneAndDelete({taskId : req.params.taskId});
-        res.send("Task Deleted successfully");
-    }
-    catch(err)
-    {
-      res.send(err);
-    }
+  const deleteTask = await Task.findOneAndDelete({taskId : req.params.taskId});
+  if(deleteTask) 
+  {
+    res.status(200).send("Task Deleted successfully");
+  }   
+  else
+  {
+    res.status(500).send({error : "Error found"});
+  }
 };
-
-    
-  
-
 
   
 module.exports = { getAllTasks , createTask , updateTask , getTask , deleteTask };

@@ -17,8 +17,6 @@ const authVerify = require("../helpers/authVerfiy");
 
 // function for signup or create new user
 const newUser = async function (req , res) {
-    try
-    {
         const hashPassword = await hashGenerate(req.body.password)
         const user = new User({
             username : req.body.username,
@@ -26,44 +24,43 @@ const newUser = async function (req , res) {
             password : hashPassword
         });
         const savedUser = await user.save();
-        res.send(savedUser);
-    }
-    
-    catch(error)
-    {
-        res.send(error);
-    }
+        if(savedUser)
+        {
+            res.status(200).send("user created successfully");
+        }
+        else
+        {
+            res.status(500).send({error:"something Failed"});
+        }      
 };
 
 //signin 
 const signinUser =  async function (req,res) {
-    try{
-        const existingUser = await User.findOne({ email :req.body.email });
-        if(!existingUser){
-            res.send("Email is invalid");
-        }
-        else{
-            const checkUser = await hashValidator(req.body.password , existingUser.password);
-            console.log(req.body.password);
-            console.log(existingUser.password);
-            if(!checkUser)
-            {
-                res.send("Password is invalid");
-            }
-            else
-            {
-                const token = await tokenGenerator(existingUser.email); // calling tokenGernerator to create token
-                res.cookie("jwt" , token); //token stored in cookies as jwt 
-                res.send(token);
-            }
-        }
-    }
-    catch(error)
+    const existingUser = await User.findOne({ email :req.body.email });
+    if(!existingUser)
     {
-        res.send(error);
+        res.send("Email is invalid");
     }
-   
-};
+    else
+    {
+        const checkUser = await hashValidator(req.body.password , existingUser.password);
+        console.log(req.body.password);
+        console.log(existingUser.password);
+        if(!checkUser)
+        {
+            res.send("Password is invalid");
+            res.status(401).send({error:"Unauthorized user"});
+        }
+        else
+        {
+            const token = await tokenGenerator(existingUser.email); // calling tokenGernerator to create token
+            res.cookie("jwt" , token); //token stored in cookies as jwt 
+            res.send(token);
+            res.status(200).send("Login successfully"); 
+        }
+    }
+}
+
 
 // only login user can have access to this path
 // authVerfy is a middleware function = verfication process before callback function

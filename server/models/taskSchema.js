@@ -1,10 +1,15 @@
 const mongoose = require("mongoose");
 
 const taskSchema = new mongoose.Schema({
-    taskId :{
+    userId :
+    {
         type : Number ,
         required : true 
     },
+    // taskId :{
+    //     type : Number ,
+    //     required : true 
+    // },
     taskName : {
         type : String , 
         required : true ,
@@ -14,12 +19,13 @@ const taskSchema = new mongoose.Schema({
     from :
     {
         type: Date ,
-        default : () => Date.now()
+        default : () => Date.now(),
+        required : true 
     },
     to : 
     {
         type : Date , 
-        
+        required : true ,
     },
     type : 
     {

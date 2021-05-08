@@ -16,14 +16,15 @@ const {tokenGenerator} = require("../helpers/token.js");
 const authVerify = require("../helpers/authVerfiy");
 
 // function for signup or create new user
-const newUser = async function (req , res) {
+const newUser =  async (req , res) => {
         const hashPassword = await hashGenerate(req.body.password)
         const user = new User({
+            userId : req.body.userId,
             username : req.body.username,
             email : req.body.email,
             password : hashPassword
         });
-        const savedUser = await user.save();
+        const savedUser =  await user.save();
         if(savedUser)
         {
             res.status(200).send("user created successfully");

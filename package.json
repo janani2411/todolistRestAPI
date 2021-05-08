@@ -1,24 +1,35 @@
 {
   "name": "todo-list",
   "version": "1.0.0",
-  "description": "",
+  "description": "{   \"name\": \"todo-list\",   \"version\": \"1.0.0\",   \"description\": \"\",   \"main\": \"index.js\",   \"private\": true,   \"scripts\": {     \"server\": \"nodemon ./server/bin/www\"   },   \"author\": \"\",   \"license\": \"ISC\",   \"dependencies\": {     \"bcryptjs\": \"^2.4.3\",     \"cookie-parser\": \"^1.4.5\",     \"debug\": \"^4.3.1\",     \"dotenv\": \"^8.2.0\",     \"express\": \"^4.17.1\",     \"jsonwebtoken\": \"^8.5.1\",     \"mongoose\": \"^5.12.5\",     \"morgan\": \"^1.10.0\",     \"nodemon\": \"^2.0.7\",     \"npm-run-all\": \"^4.1.5\"   } }",
   "main": "index.js",
-  "private": true,
-  "scripts": {
-    "server": "nodemon ./server/bin/www"
-  },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "debug": "^4.3.1",
-    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.6.6",
     "mongoose": "^5.12.5",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.7",
     "npm-run-all": "^4.1.5"
-  }
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "test": "nodemon ./server/bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janani2411/todolistRestAPI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/janani2411/todolistRestAPI/issues"
+  },
+  "homepage": "https://github.com/janani2411/todolistRestAPI#readme"
 }

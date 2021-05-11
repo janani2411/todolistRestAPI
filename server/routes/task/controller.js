@@ -69,8 +69,8 @@ const updateTask  = async function(req, res, next) {
 
 // DELETE SPECIFIC Task
 const deleteTask = async function(req, res, next) {
-  console.log("hai");
-  const deleteTask = await Task.findOneAndDelete({taskId: req.params._id});
+  console.log(req.params.taskId);
+  const deleteTask = await Task.findOneAndDelete({_id : req.params.taskId});
   console.log(deleteTask);
   if(deleteTask) 
   {

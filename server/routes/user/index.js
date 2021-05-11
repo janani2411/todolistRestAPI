@@ -6,7 +6,7 @@ const authVerify = require("../helpers/authVerfiy");
 /* GET home page. */
 
 router.post("/signup", controller.newUser );
-router.get("/signin", controller.signinUser);
+router.post("/signin", controller.signinUser);
 router.get("/protected" , authVerify , controller.protected);
 router.get("/signout", controller.signoutUser);
 

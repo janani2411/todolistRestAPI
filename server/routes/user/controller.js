@@ -19,7 +19,6 @@ const authVerify = require("../helpers/authVerfiy");
 const newUser =  async (req , res) => {
         const hashPassword = await hashGenerate(req.body.password)
         const user = new User({
-            userId : req.body.userId,
             username : req.body.username,
             email : req.body.email,
             password : hashPassword
